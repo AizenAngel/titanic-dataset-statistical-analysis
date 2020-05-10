@@ -85,7 +85,7 @@ deal_with_NA_values <- function(dataFrame){
 
 main <- function(){
   
-  dataFrame <- read_data("train.csv", "test.csv", "classes.csv")  
+  dataFrame <- read_data("Titanic/train.csv", "Titanic/test.csv", "Titanic/classes.csv")  
   dataFrame <- deal_with_NA_values(dataFrame)
   
   head(dataFrame)
