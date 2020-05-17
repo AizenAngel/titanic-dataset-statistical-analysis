@@ -44,8 +44,8 @@ read_test_data <- function(dataPath, classPath){
 
 
 deal_with_Embarked_NA <- function(dataFrame){
-  print("Embarked NA: ")
-  print(dataFrame[(is.na(dataFrame$Embarked)),])
+  #print("Embarked NA: ")
+  #print(dataFrame[(is.na(dataFrame$Embarked)),])
   #unique(dataFrame$Embarked)
   #print(mean(dataFrame[(which(dataFrame$Embarked == "S")),]$Fare, na.rm = T))
   #print(mean(dataFrame[(which(dataFrame$Embarked == "C")),]$Fare, na.rm = T))
@@ -65,7 +65,7 @@ deal_with_Cabin_NA <- function(dataFrame) {
 }
 
 deal_with_Fare_NA <- function(dataFrame) {
-  print(dataFrame[(which(is.na(dataFrame$Fare))),])
+  # print(dataFrame[(which(is.na(dataFrame$Fare))),])
   m1 <- mean(dataFrame[(which(dataFrame$Embarked == "S" & dataFrame$Sex == "male" & dataFrame$Pclass == 3)),]$Fare, na.rm=T)
   dataFrame$Fare <- na_replace(dataFrame$Fare, m1)
   
@@ -93,17 +93,48 @@ plot_female_vs_male_survival_frequency <- function(dataFrame){
   legend("topright",text.col=c("red","orange"),legend=c("Survived","Not Survived"), cex = 0.6) 
 }
 
+plot_sibsp_vs_survived <- function(dataFrame) {
+ 
+  all_sibsp <- c(0:8)
+  survival_percentage <- vector()
+  
+  for (i in all_sibsp) {
+    all_passengers_for_current_sibsp <- subset(dataFrame, SibSp == i)
+    number_of_survivals = sum(all_passengers_for_current_sibsp$Survived)
+    number_of_all_passengers = length(all_passengers_for_current_sibsp$Survived)
+    
+    
+    if (number_of_survivals == 0) {
+      survival_percentage <- append(survival_percentage, 0)
+    } else {
+      percentage <- 100 * number_of_survivals / number_of_all_passengers
+      survival_percentage <- append(survival_percentage, percentage)
+    }
+  }
+  
+  
+  barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 100),col="blue",
+          main="Survival Percentage vs SibSp")
+}
+  
+                                 
+
 #####################################################################################
 main <- function(){
-  dataFrame <- read_data("Titanic/extracted_train.csv", "Titanic/extracted_test.csv", "Titanic/classes.csv")  
+  print('main started')
+  dataFrame <- read_data("./Titanic/extracted_train.csv", "./Titanic/extracted_test.csv", "./Titanic/classes.csv")  
+  print('dataFrame loaded')
   dataFrame <- deal_with_NA_values(dataFrame)
+  
+  print('Dealt with NA vals')
   
   #survived(dataFrame)
   
- #prop.table(table(dataFrame$Survived))
+  prop.table(table(dataFrame$Survived))
   plot_gender_frequency(dataFrame)
   plot_female_vs_male_survival_frequency(dataFrame)
-  head(dataFrame)
+  plot_sibsp_vs_survived(dataFrame)
+  # head(dataFrame)
 }
 
 main()
