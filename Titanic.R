@@ -117,6 +117,36 @@ plot_sibsp_vs_survived <- function(dataFrame) {
           main="Survival Percentage vs SibSp")
 }
   
+plot_name_vs_survived <- function(dataFrame, min_num_of_people_with_the_name) {
+  unique_names = unique(dataFrame$Name)
+  
+  
+  names_with_min_num_of_people <- vector()
+  for (name in unique_names) {
+    number_of_people_with_the_name <- nrow(subset(dataFrame, Name == name))
+    if (number_of_people_with_the_name >= min_num_of_people_with_the_name) {
+      names_with_min_num_of_people <- append(names_with_min_num_of_people, name)
+    }
+  }
+  
+  survival_percentage <- vector()
+  for(name in names_with_min_num_of_people) {
+    all_passengers_for_current_name <- subset(dataFrame, Name == name)
+    number_of_survivals = sum(all_passengers_for_current_name$Survived)
+    number_of_all_passengers = length(all_passengers_for_current_name$Survived)
+    
+    
+    if (number_of_survivals == 0) {
+      survival_percentage <- append(survival_percentage, 0)
+    } else {
+      percentage <- 100 * number_of_survivals / number_of_all_passengers
+      survival_percentage <- append(survival_percentage, percentage)
+    }
+  }
+  
+  barplot(survival_percentage, names.arg=names_with_min_num_of_people, xlab="Names", ylab="Survival Percentage", ylim=c(0, 100),col="blue",
+          main="Survival Percentage vs Names", las=2, cex.names = 0.75)
+}
                                  
 
 #####################################################################################
@@ -130,10 +160,11 @@ main <- function(){
   
   #survived(dataFrame)
   
-  prop.table(table(dataFrame$Survived))
-  plot_gender_frequency(dataFrame)
-  plot_female_vs_male_survival_frequency(dataFrame)
-  plot_sibsp_vs_survived(dataFrame)
+  # prop.table(table(dataFrame$Survived))
+  # plot_gender_frequency(dataFrame)
+  # plot_female_vs_male_survival_frequency(dataFrame)
+  # plot_sibsp_vs_survived(dataFrame)
+  plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   # head(dataFrame)
 }
 
