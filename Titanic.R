@@ -112,7 +112,10 @@ plot_sibsp_vs_survived <- function(dataFrame) {
     }
   }
   
+  print(survival_percentage)
+  
   #? Pitati za ovo, jer ne znam alfa i beta potrebnu da probamo da aproksimiramo gamma, ovo javlja nekakvu eksponencijalnu
+  #? Druga stvar koja mi nije jasna je da li je uopste moguce uraditi sa samo 8 tacaka (sumnjam)
   library(gamlss)
   library(gamlss.dist)
   library(gamlss.add)
