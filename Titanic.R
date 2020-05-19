@@ -112,6 +112,14 @@ plot_sibsp_vs_survived <- function(dataFrame) {
     }
   }
   
+  #? Pitati za ovo, jer ne znam alfa i beta potrebnu da probamo da aproksimiramo gamma, ovo javlja nekakvu eksponencijalnu
+  library(gamlss)
+  library(gamlss.dist)
+  library(gamlss.add)
+  
+  fit <- fitDist(survival_percentage, k = 2, type = "realplus", trace = FALSE, try.gamlss = TRUE)
+  summary(fit)
+  
   
   barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 100),col="blue",
           main="Survival Percentage vs SibSp")
@@ -163,8 +171,8 @@ main <- function(){
   # prop.table(table(dataFrame$Survived))
   # plot_gender_frequency(dataFrame)
   # plot_female_vs_male_survival_frequency(dataFrame)
-  # plot_sibsp_vs_survived(dataFrame)
-  plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
+  plot_sibsp_vs_survived(dataFrame)
+  # plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   # head(dataFrame)
 }
 
