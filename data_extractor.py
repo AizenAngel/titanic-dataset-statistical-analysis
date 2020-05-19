@@ -44,9 +44,16 @@ def extract_names_surnames(fpath: str, new_fpath) -> None:
 
     df.to_csv(new_fpath)
 
-if __name__ == "__main__":
-    new_test_fpath = DATA_FOLDER_PATH + '/extracted_test.csv'
-    extract_names_surnames(TEST_PATH, new_test_fpath)
 
-    new_train_fpath = DATA_FOLDER_PATH + '/extracted_train.csv'
-    extract_names_surnames(TRAIN_PATH, new_train_fpath)
+
+if __name__ == "__main__":
+    df = pd.read_csv('Titanic/extracted_test.csv').dropna()
+    print(df[['Embarked', 'Fare']])
+    
+
+    print(df['Embarked'].unique())
+    # new_test_fpath = DATA_FOLDER_PATH + '/extracted_test.csv'
+    # extract_names_surnames(TEST_PATH, new_test_fpath)
+
+    # new_train_fpath = DATA_FOLDER_PATH + '/extracted_train.csv'
+    # extract_names_surnames(TRAIN_PATH, new_train_fpath)

@@ -158,6 +158,28 @@ plot_name_vs_survived <- function(dataFrame, min_num_of_people_with_the_name) {
   barplot(survival_percentage, names.arg=names_with_min_num_of_people, xlab="Names", ylab="Survival Percentage", ylim=c(0, 100),col="blue",
           main="Survival Percentage vs Names", las=2, cex.names = 0.75)
 }
+
+plot_embarked_vs_fare <- function(dataFrame) {
+  embark_places <- c('S', 'C', 'Q')
+  colors <- c('red', 'green', 'blue')
+  names(colors) <- embark_places
+  
+  fares_s <- subset(dataFrame, Embarked == 'S')$Fare
+  fares_c <- subset(dataFrame, Embarked == 'C')$Fare
+  fares_q <- subset(dataFrame, Embarked == 'Q')$Fare
+ 
+  
+  fares_list = list("S"=fares_s[fares_s < 300], "C"=fares_c[fares_c < 300], "Q"=fares_q[fares_q < 300])
+  stripchart(
+    fares_list,
+    main="Comparison between fares in different embark places",
+    xlab="Fare price",
+    ylab="Embark places",
+    method="jitter",
+    col=colors,
+    pch=16
+  );
+}
                                  
 
 #####################################################################################
@@ -174,9 +196,10 @@ main <- function(){
   # prop.table(table(dataFrame$Survived))
   # plot_gender_frequency(dataFrame)
   # plot_female_vs_male_survival_frequency(dataFrame)
-  plot_sibsp_vs_survived(dataFrame)
+  #plot_sibsp_vs_survived(dataFrame)
   # plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   # head(dataFrame)
+  plot_embarked_vs_fare(dataFrame)
 }
 
 main()
