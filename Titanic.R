@@ -1,7 +1,8 @@
 #install.packages("imputeTS")
 library("imputeTS")
 library(ggplot2)
-
+#install.packages("kableExtra")
+library(kableExtra)
 
 # mean(train_data$Age, na.rm = T)   = 29.69912
 # median(train_data$Age, na.rm = T) = 28
@@ -181,6 +182,33 @@ plot_embarked_vs_fare <- function(dataFrame) {
   );
 }
                                  
+test_survived_dependant_on_embarked <- function(dataFrame, alpha){
+  dataFrame$Survived  
+  
+  survived_embarked_subset <- subset(dataFrame, select = c("Survived", "Embarked"))  
+  t1<-table(survived_embarked_subset)
+
+  n <- length(survived_embarked_subset$Survived)
+  p_rows <- apply(t1, FUN = sum, MARGIN = 1) / n
+  p_columns <- apply(t1, FUN = sum, MARGIN = 2) / n
+  
+  values <- expand.grid(p_rows, p_columns)
+  values
+  
+  values <- values[1] * values[2]
+  values <- matrix(values[[1]], ncol = 3) * n
+
+  data <- c(137, 135, 69, 54, 609, 305)
+  
+  test_statistics = sum((data - values)^2 / values)
+  c = qchisq(0.99, 2)
+  print("Test statistics")
+  print(test_statistics)
+  print("Critical section constant")
+  print(c)
+  
+  return (test_statistics > c)
+}
 
 #####################################################################################
 main <- function(){
@@ -199,8 +227,18 @@ main <- function(){
   #plot_sibsp_vs_survived(dataFrame)
   # plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   # head(dataFrame)
-  plot_embarked_vs_fare(dataFrame)
+#  plot_embarked_vs_fare(dataFrame)
+  
+  test_survived_dependant_on_embarked(dataFrame, 0.01)
+  
+  ggplot(dataFrame, aes(Age, fill = factor(Survived))) + 
+    geom_histogram() + 
+    facet_grid(.~Sex)  
+
+  
 }
 
 main()
-  
+?kableExtra
+?print
+
