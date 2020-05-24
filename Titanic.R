@@ -61,7 +61,7 @@ deal_with_Embarked_NA <- function(dataFrame){
 
 deal_with_Cabin_NA <- function(dataFrame) {
   dataFrame = within(dataFrame, rm("Cabin"))
-
+  
   return(dataFrame)  
 }
 
@@ -95,7 +95,7 @@ plot_female_vs_male_survival_frequency <- function(dataFrame){
 }
 
 plot_sibsp_vs_survived <- function(dataFrame) {
- 
+  
   all_sibsp <- c(0:8)
   survival_percentage <- vector()
   
@@ -128,7 +128,7 @@ plot_sibsp_vs_survived <- function(dataFrame) {
   barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 100),col="blue",
           main="Survival Percentage vs SibSp")
 }
-  
+
 plot_name_vs_survived <- function(dataFrame, min_num_of_people_with_the_name) {
   unique_names = unique(dataFrame$Name)
   
@@ -168,7 +168,7 @@ plot_embarked_vs_fare <- function(dataFrame) {
   fares_s <- subset(dataFrame, Embarked == 'S')$Fare
   fares_c <- subset(dataFrame, Embarked == 'C')$Fare
   fares_q <- subset(dataFrame, Embarked == 'Q')$Fare
- 
+  
   
   fares_list = list("S"=fares_s[fares_s < 300], "C"=fares_c[fares_c < 300], "Q"=fares_q[fares_q < 300])
   stripchart(
@@ -181,33 +181,61 @@ plot_embarked_vs_fare <- function(dataFrame) {
     pch=16
   );
 }
-                                 
-test_survived_dependant_on_embarked <- function(dataFrame, alpha){
-  dataFrame$Survived  
-  
-  survived_embarked_subset <- subset(dataFrame, select = c("Survived", "Embarked"))  
-  t1<-table(survived_embarked_subset)
 
-  n <- length(survived_embarked_subset$Survived)
-  p_rows <- apply(t1, FUN = sum, MARGIN = 1) / n
-  p_columns <- apply(t1, FUN = sum, MARGIN = 2) / n
+dependency_test <- function(dataFrame, alpha){
+  n <- length(dataFrame$Survived)
+  dataTable <- table(dataFrame)
+  
+  p_rows <- apply(dataTable, FUN = sum, MARGIN = 1) / n
+  p_columns <- apply(dataTable, FUN = sum, MARGIN = 2) / n
+  
+  expected_data <- c(dataTable)
   
   values <- expand.grid(p_rows, p_columns)
-  values
-  
   values <- values[1] * values[2]
-  values <- matrix(values[[1]], ncol = 3) * n
-
-  data <- c(137, 135, 69, 54, 609, 305)
+  values <- matrix(values[[1]], ncol = length(expected_data)/2) * n
   
-  test_statistics = sum((data - values)^2 / values)
-  c = qchisq(0.99, 2)
+  test_statistics = sum((expected_data - values)^2 / values)
+  c = qchisq(1-alpha, length(expected_data) - 1)
   print("Test statistics")
   print(test_statistics)
   print("Critical section constant")
   print(c)
   
   return (test_statistics > c)
+}
+
+test_survived_dependant_on_embarked <- function(dataFrame, alpha){
+  survived_embarked_subset <- subset(dataFrame, select = c("Survived", "Embarked")) 
+  
+  return (dependency_test(survived_embarked_subset, alpha))
+}
+
+test_survived_dependant_on_pclass <- function(dataFrame, alpha){
+  survived_fare_subset <- subset(dataFrame, select = c("Survived", "Pclass"))
+  
+  return (dependency_test(survived_fare_subset, alpha))
+}
+
+test_survived_dependant_on_age <- function(dataFrame, alpha){
+  # infancy, early childhood, middle childhood, late childhood,adolescence, earlay adulthood, midlife, mature adulthood, late adulthood
+  #age_breaks = c(4, 12, 21, 35, 50, 80)
+  dataFrame$AgeGroup[dataFrame$Age < 4] <- 1
+  dataFrame$AgeGroup[4<=dataFrame$Age & dataFrame$Age < 12] <- 2
+  dataFrame$AgeGroup[12<=dataFrame$Age & dataFrame$Age < 21] <- 3
+  dataFrame$AgeGroup[21<=dataFrame$Age & dataFrame$Age < 35] <- 4
+  dataFrame$AgeGroup[35<=dataFrame$Age & dataFrame$Age < 50] <- 5
+  dataFrame$AgeGroup[50<=dataFrame$Age & dataFrame$Age < 80] <- 6
+  dataFrame$AgeGroup[dataFrame$Age >= 80] <- 7 
+  
+  survived_age_subset <- subset(dataFrame, select = c("Survived", "AgeGroup"))
+  survived_age_subset <- na.omit(survived_age_subset)
+  
+  #table(survived_age_subset)
+  
+  
+  
+  return(dependency_test(survived_age_subset, alpha))
 }
 
 #####################################################################################
@@ -223,18 +251,24 @@ main <- function(){
   
   # prop.table(table(dataFrame$Survived))
   # plot_gender_frequency(dataFrame)
-  # plot_female_vs_male_survival_frequency(dataFrame)
-  #plot_sibsp_vs_survived(dataFrame)
+  # plot_sibsp_vs_survived(dataFrame)
   # plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   # head(dataFrame)
-#  plot_embarked_vs_fare(dataFrame)
+  # plot_embarked_vs_fare(dataFrame)
+  
+  #test_survived_dependant_on_embarked(dataFrame, 0.01)  
+  
+  #test_survived_dependant_on_fare(dataFrame, 0.01)
+  #test_survived_dependant_on_pclass(dataFrame, 0.01)
+  #plot_gender_frequency(dataFrame)
+  
+  #test_survived_dependant_on_embarked(dataFrame, 0.01)
+
+  #table(dataFrame$AgeRange)
   
   test_survived_dependant_on_embarked(dataFrame, 0.01)
-  
-  ggplot(dataFrame, aes(Age, fill = factor(Survived))) + 
-    geom_histogram() + 
-    facet_grid(.~Sex)  
-
+  test_survived_dependant_on_pclass(dataFrame, 0.01)
+  test_survived_dependant_on_age(dataFrame, 0.1)
   
 }
 
