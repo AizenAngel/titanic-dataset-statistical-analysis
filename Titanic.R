@@ -268,7 +268,7 @@ main <- function(){
   
   test_survived_dependant_on_embarked(dataFrame, 0.01)
   test_survived_dependant_on_pclass(dataFrame, 0.01)
-  test_survived_dependant_on_age(dataFrame, 0.1)
+  test_survived_dependant_on_age(dataFrame, 0.5)
   
 }
 
