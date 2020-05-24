@@ -233,9 +233,17 @@ test_survived_dependant_on_age <- function(dataFrame, alpha){
   
   #table(survived_age_subset)
   
-  
-  
   return(dependency_test(survived_age_subset, alpha))
+}
+
+test_survived_dependant_on_cabin() <- function(dataFrame, alpha){
+  survived_cabin_subset <- subset(dataFrame, select = c("Survived", "Cabin"))
+  survived_cabin_subset <- na.omit(survived_cabin_subset)
+  
+  survived_cabin_subset$Cabin <- substr(survived_cabin_subset$Cabin, 1, 1)
+  #table(survived_cabin_subset) 
+
+  return (dependency_test(survived_cabin_subset, alpha))  
 }
 
 #####################################################################################
@@ -275,4 +283,4 @@ main <- function(){
 main()
 ?kableExtra
 ?print
-
+?substr
