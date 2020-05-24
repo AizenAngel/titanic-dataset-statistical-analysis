@@ -236,7 +236,7 @@ test_survived_dependant_on_age <- function(dataFrame, alpha){
   return(dependency_test(survived_age_subset, alpha))
 }
 
-test_survived_dependant_on_cabin() <- function(dataFrame, alpha){
+test_survived_dependant_on_cabin <- function(dataFrame, alpha){
   survived_cabin_subset <- subset(dataFrame, select = c("Survived", "Cabin"))
   survived_cabin_subset <- na.omit(survived_cabin_subset)
   
@@ -277,7 +277,7 @@ main <- function(){
   test_survived_dependant_on_embarked(dataFrame, 0.01)
   test_survived_dependant_on_pclass(dataFrame, 0.01)
   test_survived_dependant_on_age(dataFrame, 0.5)
-  
+  test_survived_dependant_on_cabin(dataFrame, 0.4)
 }
 
 main()
