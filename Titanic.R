@@ -1,6 +1,7 @@
 library("imputeTS")
 library(ggplot2)
 library(kableExtra)
+library(MASS)
 
 # mean(train_data$Age, na.rm = T)   = 29.69912
 # median(train_data$Age, na.rm = T) = 28
@@ -104,25 +105,35 @@ plot_sibsp_vs_survived <- function(dataFrame) {
     if (number_of_survivals == 0) {
       survival_percentage <- append(survival_percentage, 0)
     } else {
-      percentage <- 100 * number_of_survivals / number_of_all_passengers
+      percentage <- number_of_survivals / number_of_all_passengers
       survival_percentage <- append(survival_percentage, percentage)
     }
   }
   
   
-  #? Pitati za ovo, jer ne znam alfa i beta potrebnu da probamo da aproksimiramo gamma, ovo javlja nekakvu eksponencijalnu
-  #? Druga stvar koja mi nije jasna je da li je uopste moguce uraditi sa samo 8 tacaka (sumnjam)
-  library(gamlss)
-  library(gamlss.dist)
-  library(gamlss.add)
+  mean_survival_perc <- mean(survival_percentage)
+  var_survival_perc <- var(survival_percentage)
   
-  fit <- fitDist(survival_percentage, k = 2, type = "realplus", trace = FALSE, try.gamlss = TRUE)
-  summary(fit)
+  alpha <- mean_survival_perc * mean_survival_perc / var_survival_perc
+  beta <- mean_survival_perc / var_survival_perc
   
-  png(file='img/plot_sibsp_vs_survived.png')
-  barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 100),col="blue",
-          main="Survival Percentage vs SibSp")
-  dev.off()
+  x <- round(rgamma(8,shape = alpha,rate = beta),1)
+  plot(dgamma(survival_percentage, shape = alpha,rate = beta ))
+  print(x)
+  
+  print(alpha)
+  print(beta)
+  
+  print(survival_percentage)
+  
+  
+  
+  #png(file='img/plot_sibsp_vs_survived.png')
+  barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 1),col="blue",
+  main="Survival Percentage vs SibSp")
+ #? FIXME
+  plot(dgamma(x, shape = alpha, scale = beta), add = TRUE, col='red', lwd=2 )
+  #dev.off()
 }
 
 plot_name_vs_survived <- function(dataFrame, min_num_of_people_with_the_name) {
@@ -260,11 +271,11 @@ main <- function(){
   #survived(dataFrame)
   
   # prop.table(table(dataFrame$Survived))
-  plot_gender_frequency(dataFrame)
+  #plot_gender_frequency(dataFrame)
   plot_sibsp_vs_survived(dataFrame)
-  plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
-  plot_embarked_vs_fare(dataFrame)
-  plot_female_vs_male_survival_frequency(dataFrame)
+  #plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
+  #plot_embarked_vs_fare(dataFrame)
+  #plot_female_vs_male_survival_frequency(dataFrame)
   
   
   #test_survived_dependant_on_embarked(dataFrame, 0.01)  
@@ -277,10 +288,10 @@ main <- function(){
 
   #table(dataFrame$AgeRange)
   
-  test_survived_dependant_on_embarked(dataFrame, 0.01)
-  test_survived_dependant_on_pclass(dataFrame, 0.01)
-  test_survived_dependant_on_age(dataFrame, 0.5)
-  test_survived_dependant_on_cabin(dataFrame, 0.4)
+  #test_survived_dependant_on_embarked(dataFrame, 0.01)
+  #test_survived_dependant_on_pclass(dataFrame, 0.01)
+  #test_survived_dependant_on_age(dataFrame, 0.5)
+  #test_survived_dependant_on_cabin(dataFrame, 0.4)
 }
 main()
 
