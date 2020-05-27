@@ -227,6 +227,15 @@ test_survived_dependant_on_pclass <- function(dataFrame, alpha){
   return (dependency_test(survived_fare_subset, alpha))
 }
 
+plot_sex_vs_age_survival <- function(dataset){
+  ggplot(dataFrame, aes(Age, fill = factor(Survived))) + 
+    geom_histogram() + 
+    facet_grid(.~Sex) 
+  ggsave(
+    "img/plot_sex_vs_age_survived.png",
+    plot = last_plot())
+}
+
 test_survived_dependant_on_age <- function(dataFrame, alpha){
   # infancy, early childhood, middle childhood, late childhood,adolescence, earlay adulthood, midlife, mature adulthood, late adulthood
   #age_breaks = c(4, 12, 21, 35, 50, 80)
