@@ -74,7 +74,6 @@ deal_with_Fare_NA <- function(dataFrame) {
 
 deal_with_NA_values <- function(dataFrame){
   sapply(dataFrame, function(x) sum(is.na(x)))
-  
   #dataFrame <- deal_with_Cabin_NA(dataFrame)
   dataFrame <- deal_with_Embarked_NA(dataFrame)
   dataFrame <- deal_with_Fare_NA(dataFrame)
@@ -280,7 +279,6 @@ main <- function(){
   #survived(dataFrame)
   
   # prop.table(table(dataFrame$Survived))
-  plot_gender_frequency(dataFrame)
   plot_sibsp_vs_survived(dataFrame)
   plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   plot_embarked_vs_fare(dataFrame)
@@ -297,14 +295,18 @@ main <- function(){
 
   #table(dataFrame$AgeRange)
   
-  
+  fare <- dataFrame$Fare
+  max(fare)
+  min(fare)
   
   test_survived_dependant_on_embarked(dataFrame, 0.01)
   test_survived_dependant_on_pclass(dataFrame, 0.01)
   test_survived_dependant_on_age(dataFrame, 0.5)
   test_survived_dependant_on_cabin(dataFrame, 0.4)
 
-  plot_sex_vs_age_survival(dataFrame)    
+  plot_sex_vs_age_survival(dataFrame)   
+  
+  
 }
 main()
 
