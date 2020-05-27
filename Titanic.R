@@ -196,7 +196,7 @@ dependency_test <- function(dataFrame, alpha){
   values <- matrix(values[[1]], ncol = length(expected_data)/2) * n
   
   test_statistics = sum((expected_data - values)^2 / values)
-  c = qchisq(1-alpha, length(expected_data) - 1)
+  c = qchisq(1-alpha, ncol(dataTable))
   print("Test statistics")
   print(test_statistics)
   print("Critical section constant")
@@ -254,6 +254,9 @@ main <- function(){
   dataFrame <- deal_with_NA_values(dataFrame)
   
   print('Dealt with NA vals')
+  
+  c1 <- ncol(dataFrame)
+  print(c1)
   
   #survived(dataFrame)
   
