@@ -196,7 +196,7 @@ dependency_test <- function(dataFrame, alpha){
   values <- matrix(values[[1]], ncol = length(expected_data)/2) * n
   
   test_statistics = sum((expected_data - values)^2 / values)
-  c = qchisq(1-alpha, ncol(dataTable))
+  c = qchisq(1-alpha, ncol(dataTable)-1)
   print("Test statistics")
   print(test_statistics)
   print("Critical section constant")
