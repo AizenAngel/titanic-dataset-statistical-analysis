@@ -4,7 +4,7 @@
 
 15.4.1912 globalno smatrani "nepotopopivi" brod Titanik je potonuo nakon sudara sa ledenim bregom. Na brodu nije bilo dovoljno camaca za spasavanje, tako da je zajedno sa sobom Titanik odneo oko 1500 zivota. <br>
 Element srece je definitivno uticao na to ko od putnika ce preziveti a ko ne. <br>
-Medjutim, mi smatramo da su postojali neki dodatni faktori koji su uticali na to ko od putnika ce biti stavljen na broj za spasavanje i ovim seminarskim radom zelimo da utvrdimo sta je to uticalo na odluku da li ce osoba preziveti ili ne. 
+Medjutim, mi smatramo da su postojali neki dodatni faktori koji su uticali na to ko od putnika ce biti stavljen na brod za spasavanje i ovim seminarskim radom zelimo da utvrdimo sta je to uticalo na odluku da li ce osoba preziveti ili ne. 
 
 ## Podela podataka
 Titanik skup podataka je namenjen za vezbanje tehnika istrazivanja podataka, te se samim tim sastoji iz 2 dela:
@@ -12,10 +12,6 @@ Titanik skup podataka je namenjen za vezbanje tehnika istrazivanja podataka, te 
 <li><i>Test deo</i></li>
 <br>
 Posto nas trenutno nije interesovala ta podela, spojili smo trening i test podatke u jedan skup, koji ima 1309 kolona.
-
-<style>
-   ul {list-style-type: square;}
-</style>
 
 ## Opis podataka
 U nastavku je dato ime i opis svakog atributa u skupu:
