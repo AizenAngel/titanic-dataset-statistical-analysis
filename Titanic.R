@@ -17,7 +17,6 @@ read_data <- function (trainPath, testPath, testClassPath){
   
   return (total_data)
 }
-
 convert_to_numeric <- function(dataFrame){
   dataFrame$PassengerId = as.double(dataFrame$PassengerId)
   dataFrame$Survived =as.integer(dataFrame$Survived)
@@ -92,6 +91,15 @@ plot_gender_frequency <- function(dataFrame){
 plot_female_vs_male_survival_frequency <- function(dataFrame){
   barplot(table(dataFrame$Sex,dataFrame$Survived),col=c("red","orange"), names.arg = c("male", "female")) 
   legend("topright",text.col=c("red","orange"),legend=c("Survived","Not Survived"), cex = 0.6) 
+}
+
+plot_sex_vs_age_survival <- function(dataset){
+  ggplot(dataFrame, aes(Age, fill = factor(Survived))) + 
+    geom_histogram() + 
+    facet_grid(.~Sex) 
+  ggsave(
+    "plot_sex_vs_age_survival.png",
+    plot = last_plot())
 }
 
 plot_sibsp_vs_survived <- function(dataFrame) {
@@ -189,11 +197,15 @@ dependency_test <- function(dataFrame, alpha){
   p_rows <- apply(dataTable, FUN = sum, MARGIN = 1) / n
   p_columns <- apply(dataTable, FUN = sum, MARGIN = 2) / n
   
+  #print(dataTable)
+  
   expected_data <- c(dataTable)
   
   values <- expand.grid(p_rows, p_columns)
   values <- values[1] * values[2]
   values <- matrix(values[[1]], ncol = length(expected_data)/2) * n
+  
+  #print(values)
   
   test_statistics = sum((expected_data - values)^2 / values)
   c = qchisq(1-alpha, ncol(dataTable)-1)
@@ -260,27 +272,29 @@ main <- function(){
   
   #survived(dataFrame)
   
-  # prop.table(table(dataFrame$Survived))
-  # plot_gender_frequency(dataFrame)
-  # plot_sibsp_vs_survived(dataFrame)
-  # plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
+  #prop.table(table(dataFrame$Survived))
+  plot_gender_frequency(dataFrame)
+  plot_sibsp_vs_survived(dataFrame)
+  plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
   # head(dataFrame)
-  # plot_embarked_vs_fare(dataFrame)
+  plot_embarked_vs_fare(dataFrame)
   
   #test_survived_dependant_on_embarked(dataFrame, 0.01)  
   
   #test_survived_dependant_on_fare(dataFrame, 0.01)
   #test_survived_dependant_on_pclass(dataFrame, 0.01)
   #plot_gender_frequency(dataFrame)
-  
+  #plot_female_vs_male_survival_frequency(dataFrame)
   #test_survived_dependant_on_embarked(dataFrame, 0.01)
-
+  plot_sex_vs_age_survival(dataFrame)
   #table(dataFrame$AgeRange)
   
   test_survived_dependant_on_embarked(dataFrame, 0.01)
   test_survived_dependant_on_pclass(dataFrame, 0.01)
   test_survived_dependant_on_age(dataFrame, 0.5)
   test_survived_dependant_on_cabin(dataFrame, 0.4)
+  
+
 }
 
 main()
