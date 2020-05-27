@@ -30,7 +30,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   <tr>
     <td>Pclass</td>
     <td>Klasa putnika</td>
-    <td>1- prva, 2 - drugam, 3 - treca</td>
+    <td>1- prva, 2 - druga, 3 - treca</td>
   </tr>
   <tr>
     <td>Sex</td>
