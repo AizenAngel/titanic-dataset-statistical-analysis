@@ -45,11 +45,11 @@ read_test_data <- function(dataPath, classPath){
 
 deal_with_Embarked_NA <- function(dataFrame){
   #print("Embarked NA: ")
-  #print(dataFrame[(is.na(dataFrame$Embarked)),])
+  print(dataFrame[(is.na(dataFrame$Embarked)),])
   #unique(dataFrame$Embarked)
-  #print(mean(dataFrame[(which(dataFrame$Embarked == "S")),]$Fare, na.rm = T))
-  #print(mean(dataFrame[(which(dataFrame$Embarked == "C")),]$Fare, na.rm = T))
-  #print(mean(dataFrame[(which(dataFrame$Embarked == "Q")),]$Fare, na.rm = T))
+  print(mean(dataFrame[(which(dataFrame$Embarked == "S")),]$Fare, na.rm = T))
+  print(mean(dataFrame[(which(dataFrame$Embarked == "C")),]$Fare, na.rm = T))
+  print(mean(dataFrame[(which(dataFrame$Embarked == "Q")),]$Fare, na.rm = T))
   
   #dataFrame$Embarked <- na_replace(dataFrame$Embarked, 'C')
   dataFrame$Embarked <- ifelse(is.na(dataFrame$Embarked), 
@@ -65,8 +65,8 @@ deal_with_Cabin_NA <- function(dataFrame) {
 }
 
 deal_with_Fare_NA <- function(dataFrame) {
-  # print(dataFrame[(which(is.na(dataFrame$Fare))),])
-  m1 <- mean(dataFrame[(which(dataFrame$Embarked == "S" & dataFrame$Sex == "male" & dataFrame$Pclass == 3)),]$Fare, na.rm=T)
+  print(dataFrame[(which(is.na(dataFrame$Fare))),])
+  m1 <- mean(dataFrame[(which(dataFrame$Embarked == "S" & dataFrame$Sex == "male" & dataFrame$Pclass == 3 & dataFrame$Survived == 0)),]$Fare, na.rm=T)
   dataFrame$Fare <- na_replace(dataFrame$Fare, m1)
   
   return (dataFrame)
