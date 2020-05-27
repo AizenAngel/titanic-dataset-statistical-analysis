@@ -25,7 +25,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   <tr>
     <td>Survival</td>
     <td>Da li je osoba prezivela potonuce</td>
-    <td>0/1</td>
+    <td>0 / 1</td>
   </tr>
   <tr>
     <td>Pclass</td>
@@ -35,7 +35,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   <tr>
     <td>Sex</td>
     <td>Pol</td>
-    <td>muski, zenski</td>
+    <td>muski / zenski</td>
   </tr>
   <tr>
     <td>Age</td>
@@ -70,7 +70,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   <tr>
     <td>Embarked</td>
     <td>Mesto odakle se osoba ukrcala na brod</td>
-    <td>C = Cherbourg; Q = Queenstown; S = Southampton</td>
+    <td>C - Cherbourg, Q - Queenstown, S - Southampton</td>
   </tr>
   <tr>
     <td>Name</td>
