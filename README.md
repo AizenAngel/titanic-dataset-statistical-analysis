@@ -1,7 +1,5 @@
 # Statistička analiza skupa podataka Titanik
 
-![titanic_image](https://i.postimg.cc/jj9mnKc3/Titanic.jpg)
-
 ## Uvod
 
 15.4.1912 globalno smatrani "nepotopopivi" brod Titanik je potonuo nakon sudara sa ledenim bregom. Na brodu nije bilo dovoljno čamaca za spasavanje, tako da je zajedno sa sobom Titanik odneo oko 1500 života.  
