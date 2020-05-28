@@ -2,22 +2,22 @@
 
 ## Uvod
 
-15.4.1912 globalno smatrani "nepotopopivi" brod Titanik je potonuo nakon sudara sa ledenim bregom. Na brodu nije bilo dovoljno camaca za spasavanje, tako da je zajedno sa sobom Titanik odneo oko 1500 zivota. <br>
-Element srece je definitivno uticao na to ko od putnika ce preziveti a ko ne. <br>
-Medjutim, mi smatramo da su postojali neki dodatni faktori koji su uticali na to ko od putnika ce biti stavljen na brod za spasavanje i ovim seminarskim radom zelimo da utvrdimo sta je to uticalo na odluku da li ce osoba preziveti ili ne. 
+15.4.1912 globalno smatrani "nepotopopivi" brod Titanik je potonuo nakon sudara sa ledenim bregom. Na brodu nije bilo dovoljno čamaca za spasavanje, tako da je zajedno sa sobom Titanik odneo oko 1500 života.  
 
-<br>
+Element sreće je definitivno uticao na to ko od putnika će preživeti, a ko ne.  
+Međutim, mi smatramo da su postojali neki dodatni faktori koji su uticali na to ko od putnika ce biti stavljen na brod za spasavanje i ovim seminarskim radom želimo da utvrdimo šta je to uticalo na odluku da li će osoba preživeti ili ne. 
+
 
 ## Podela podataka
+
 Titanik skup podataka je namenjen za vezbanje tehnika istrazivanja podataka, te se samim tim sastoji iz 2 dela:
-<li><i>Trening deo</i></li>
-<li><i>Test deo</i></li>
-<br>
+- *Trening deo*
+- *Test deo*
+
 Posto nas trenutno nije interesovala ta podela, spojili smo trening i test podatke u jedan skup, koji ima 1309 kolona.
 
-<br>
-
 ## Opis podataka
+
 U nastavku je dato ime i opis svakog atributa u skupu:
 
 <table>
@@ -83,10 +83,10 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   </tr>  
 </table>
 
-<br>
+## Rad sa nedostajucim vrednostima
 
-## Rad sa nedostajucim vrednostima: 
-U prilogu je data tabela sa brojem nedostajucih vrednosti.
+Tabela sa brojem nedostajućih vrednosti:
+
 <table>
   <tr>
     <th>Kolona</th>
@@ -138,19 +138,20 @@ U prilogu je data tabela sa brojem nedostajucih vrednosti.
   </tr>
 </table>
 
-<br>
 
-Vidimo da polja <i>Age</i>, <i>Fare</i>, <i>Cabin</i>, <i>Embarked</i> imaju 
-nedostajuce vrednosti i u nastavku je dat opis, kako smo resavali taj problem za svaku od klasa pojedinacno
+Vidimo da polja *Age*, *Fare*, *Cabin*, *Embarked* imaju nedostajuće vrednosti i u nastavku je dat opis, kako smo rešavali taj problem za svaku od klasa pojedinačno
 
-### Nedostajuce vrednosti za godine
-Iz datog skupa, vidimo da <i>Age</i> atribut imaju 263 nedostajuce vrednosti. U zelji da sto bolje sacuvamo originalnost podataka, nismo ih aproksimirali, a kada se javila potreba za izucavanjem ovog atributa, uklonili smo nedostajuce vrednosti.
+### Nedostajuće vrednosti za godine
 
-### Nedostajuce vrednosti za kabinu
-Ovde je situacija gora nego za prehnodni slucaj, jer <i>Cabin</i> atribut ima 1014
-nedostajucih vrednosti, tako da smo primenili istu strategiju.
+Iz datog skupa, vidimo da *Age* atribut ima 263 nedostajuće vrednosti. U želji da što bolje sačuvamo originalnost podataka, nismo ih aproksimirali, a kada se javila potreba za izučavanjem ovog atributa, uklonili smo nedostajuće vrednosti.
 
-### Nedostajuce vrednosti za cenu karte
+### Nedostajuće vrednosti za kabinu
+
+Ovde je situacija gora nego za prehnodni slucaj, jer *Cabin* atribut ima 1014
+nedostajućih vrednosti, tako da smo primenili istu strategiju.
+
+### Nedostajuće vrednosti za cenu karte
+
 Iz tabele, zakljucujemo da samo jednoj osobi fali infromacija o ceni karte. Ta osoba je:
 
 <table>
@@ -184,16 +185,18 @@ Iz tabele, zakljucujemo da samo jednoj osobi fali infromacija o ceni karte. Ta o
 
 Iz date tabele zakljucujemo 4 bitne stvari:
 <ul>
-    <li> Osoba je bila musko </li>
-    <li> Pripadala je trecoj klasi </li>
-    <li> Nije prezivela potonuce </li>
-    <li> Ukrcala se iz Southampton-a </li>
+    <li> Osoba je bila muško </li>
+    <li> Pripadala je trećoj klasi </li>
+    <li> Nije prezivela potonuće </li>
+    <li> Ukrcala se u Southampton-u </li>
 </ul>
 
-Zato smo odlucili da cenu karte ove osobe aproksimiramo srednjom vrednosti cene karata svih osoba muskog pola, trece klase, koje nisu prezivele potonuce i ukrcale su se iz luke Southampton.
+Zato smo odlučili da cenu karte ove osobe aproksimiramo srednjom vrednosti cene karata svih osoba muškog pola, treće klase, koje nisu preživele potonuće i ukrcale su se iz luke Southampton.
 
-### Nedostajuce vrednosti za luku ukrcavanja
+### Nedostajuće vrednosti za luku u kojoj su se putnici ukrcali na brod
+
 Ovde je situacija interesantnija. Pogledajmo tabelu:
+
 <table>
   <tr>
     <th>Survived</th> 
@@ -237,12 +240,12 @@ Ovde je situacija interesantnija. Pogledajmo tabelu:
   </tr>
 </table>
 
-Iz tabele zakljucujemo: 
+Iz tabele zaključujemo: 
 <ul>
-<li>U pitanju su bile osobe zenskog pola</li>
+<li>U pitanju su bile osobe ženskog pola</li>
 <li>Delile su kabinu</li>
-<li>Obe su prezivele</li>
-<li>Klasa putnika je bila ista (sto je logicno, jer su delile kabinu)</li>
+<li>Obe su preživele</li>
+<li>Klasa putnika je bila ista (sto je logično, jer su delile kabinu)</li>
 </ul>
 
 
