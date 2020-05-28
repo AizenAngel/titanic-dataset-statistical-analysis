@@ -14,7 +14,7 @@ Titanik skup podataka je namenjen za vezbanje tehnika istrazivanja podataka, te 
 - *Trening deo*
 - *Test deo*
 
-Posto nas trenutno nije interesovala ta podela, spojili smo trening i test podatke u jedan skup, koji ima 1309 kolona.
+Pošto nas trenutno nije interesovala ta podela, spojili smo trening i test podatke u jedan skup, koji ima 1309 kolona.
 
 ## Opis podataka
 
@@ -28,7 +28,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   </tr>
   <tr>
     <td>Survival</td>
-    <td>Da li je osoba prezivela potonuce</td>
+    <td>Da li je osoba preživela potonuće</td>
     <td>0 / 1</td>
   </tr>
   <tr>
@@ -39,7 +39,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   <tr>
     <td>Sex</td>
     <td>Pol</td>
-    <td>muski / zenski</td>
+    <td>muški / ženski</td>
   </tr>
   <tr>
     <td>Age</td>
@@ -48,7 +48,7 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   </tr>
   <tr>
     <td>Sibsp</td>
-    <td>Broj brace i sestara / supruznika na brodu</td>
+    <td>Broj braće i sestara / supružnika na brodu</td>
     <td>0 - 8</td>
   </tr>
   <tr>
@@ -73,12 +73,12 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   </tr>
   <tr>
     <td>Embarked</td>
-    <td>Mesto odakle se osoba ukrcala na brod</td>
+    <td>Luka iz koje se putnik ukrcao na brod</td>
     <td>C - Cherbourg, Q - Queenstown, S - Southampton</td>
   </tr>
   <tr>
     <td>Name</td>
-    <td>Ime i prezime osobe</td>
+    <td>Ime i prezime putnika</td>
     <td></td>
   </tr>  
 </table>
@@ -155,12 +155,12 @@ Iz datog skupa, vidimo da *Age* atribut ima 263 nedostajuće vrednosti. U želji
 
 ### Nedostajuće vrednosti za kabinu
 
-Ovde je situacija gora nego za prehnodni slucaj, jer *Cabin* atribut ima 1014
+Ovde je situacija gora nego za prehnodni slucaj jer *Cabin* atribut ima 1014
 nedostajućih vrednosti, tako da smo primenili istu strategiju.
 
 ### Nedostajuće vrednosti za cenu karte
 
-Iz tabele, zakljucujemo da samo jednoj osobi fali infromacija o ceni karte. Ta osoba je:
+Iz tabele, zaključujemo da samo jednoj osobi fali infromacija o ceni karte. Ta osoba je:
 
 <table>
   <tr>
@@ -195,7 +195,7 @@ Iz date tabele zakljucujemo 4 bitne stvari:
 <ul>
     <li> Osoba je bila muško </li>
     <li> Pripadala je trećoj klasi </li>
-    <li> Nije prezivela potonuće </li>
+    <li> Nije preživela potonuće </li>
     <li> Ukrcala se u Southampton-u </li>
 </ul>
 
@@ -254,7 +254,16 @@ Iz tabele zaključujemo:
 <li>Delile su kabinu</li>
 <li>Obe su preživele</li>
 <li>Klasa putnika je bila ista (sto je logično, jer su delile kabinu)</li>
-</ul>
+</ul>  
+
+Ovde smo primenili strategiju računanja medijanu cene karata za putnica iz luka Cherbourg, Queenstown i Southampton, prve klase, koje su preživele. 
+Vredonosti medijana su:
+
+- 78.85 za Southampton
+- 83.1583 za Cherbourg
+- 90 za Queenstown
+
+Zbog toga smo se odlučili da nedostajućim vrednostima za luku ukrcavanja dodelimo vrednost S, jer je najbliža stvarnoj ceni plaćene karte putnica.
 
 
 ## Obrada podataka
@@ -277,7 +286,47 @@ Interesantna stvar koju vidimo ovde je da su sve osobe sa imenom Kejt, Katarina 
 
 ![plot_embarked_vs_fare](https://i.postimg.cc/CdpwbZZj/plot-embarked-vs-fare.png)
 
-Sa slike možemo videti da ne postoji nikakva bitna razlika u ceni karte, tj. da su cene karata slično raspoređene u sva 3 mesta. Jedina interesantna stvar koju vidimo je da se najmanje ljudi ukrcalo u luci za oznakom Q (Queenstown).
+Sa slike možemo videti da je raspodela cene karata za Cherbourg i Southampton jako slična, odnosno da su podaci gušće raspoređeni u intervalu [0, 100], ređe u intervalu [100, 200] i baš retko za cenu karte koja je veća od 200. Queenstown sa druge strane ima drugačiju raspodelu, pre svega jer se dosta manji broj putnika ukrcao iz ove luke.
+
+### Test zavisnosti između luke ukrcavanja i preživljavanja
+
+Kad napravimo tabelu, koja pokazuje broj prezivelih / preminulih po luci sa koje su se ukrcali, dobijamo sledeće podatke:
+
+<table>
+  <tr>
+    <th></th>
+    <th>C</th> 
+    <th>Q</th>
+    <th>S</th>  
+  </tr>
+  <tr>
+    <th>0</th>
+    <td>137</td>
+    <td>69</td>
+    <td>609</td>
+  </tr>
+  <tr>
+    <th>1</th>
+    <td>133</td>
+    <td>54</td>
+    <td>307</td>
+  </tr>
+</table>
+
+Verovatnoće preživljavanja za svaku luku su:  
+- Cherbourg: 0.49
+- Queenstown: 0.43
+- Southampton: 0.33
+
+Odavde bi se moglo zaključiti da luka iz koje se osoba ukrcala utiče na verovatnoću njenog preživljavanja.  
+Da bismo potvrdili tu hipotezu, napravili smo test nezavisnosti izmedju mesta ukrcavanja osobe i toga da li je ona preživela, odnosno:
+
+- *H0* - luka ukrcavanja i verovatnoća preživljavanja su nezavisne veličine
+- *H1* - luka ukrcavanja i verovatnoća preživljavanja su zavisne veličine
+
+Iz fajla `Titanik.R` prilikom pokretanja funkcije  `test_survived_dependant_on_embarked()` dobijamo da je vrednost *test statistike*
+24.19, a *kritične sekcije* 9.21.  
+Ovim rezultatom potvrđujemo da je verovatnoća preživljavanja osobe zavisila od luke iz koje se ukrcala na brod, odnosno obaramo nultu hipotezu.
 
 ### Uticaj pola na preživljavanje
 
@@ -291,11 +340,98 @@ Još jedan grafik koji prikazuje preživele i umrle:
 
 Odavde se može primetiti da je najveći procenat osoba muškog pola koji je preživeo zapravo bio u dečijem uzrastu, što se takođe uklapa sa činjenicom da su u čamcima sa spašavanje prednost imali žene i deca.
 
-#### FALI TEST AKO POSTOJI 
+#### Uticaj godina putnika na preživljavanje
+
+Ovim testom želimo da proverimo da li je tačno da su godine starosti nekako uticale na šansu za preživljavanje.  
+Pošto su godine numerički, neprekidni atribut, mi smo sve putnike na brodu podelili u sledeće kategorije, prema godinama:  
+- Kategorija 1: putnici mlađi od 4 godine
+- Kategorija 2: putnici između 4 i 12 godina
+- Kategorija 3: putnici između 12 i 21 godinu
+- Kategorija 4: putnici između 21 i 35 godina
+- Kategorija 5: putnici između 35 i 50 godina
+- Kategorija 6: putnici između 50 i 80 godina
+- Kategorija 7: putnici stariji od 80 godina
+
+Tabelarni prikaz podele izgleda ovako:
+
+<table>
+  <tr>
+    <th></th>
+    <th>1</th> 
+    <th>2</th>
+    <th>3</th>  
+    <th>4</th>
+    <th>5</th> 
+    <th>6</th>
+    <th>7</th>
+  </tr>
+  <tr>
+    <th>0</th>
+    <td>14</td>
+    <td>28</td>
+    <td>93</td>
+    <td>287</td>
+    <td>140</td>
+    <td>67</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th>1</th>
+    <td>27</td>
+    <td>22</td>
+    <td>65</td>
+    <td>165</td>
+    <td>95</td>
+    <td>52</td>
+    <td>1</td>
+  </tr>
+</table>
+
+Primećujemo da su prva i sedma kategorija imale veliku šansu za preživljavanjem, dok je cetvrta imala jako malu šansu.  
+Prilikom pokretanja funkcije `test_survived_dependant_on_age()` dobijamo da je 
+vrednost *test statistike* 15.76, a vrednost *konstante za kritičnu sekciju* je 16.81. Odavde zaključujemo da **prema ovoj podeli kategorija za godine, godine nisu uticale na šansu za preživljavanje.** 
 
 ### Uticaj putničke klase na preživljavanje
+Tabelarni prikaz koja pokazuje raspodelu putničke klase prema tome da li je osoba preživela:
 
-#### OVDE TEST
+<table>
+  <tr>
+    <th></th>
+    <th>1</th> 
+    <th>2</th>
+    <th>3</th>  
+  </tr>
+  <tr>
+    <th>0</th>
+    <td>137</td>
+    <td>160</td>
+    <td>518</td>
+  </tr>
+  <tr>
+    <th>1</th>
+    <td>186</td>
+    <td>117</td>
+    <td>191</td>
+  </tr>
+</table>
+
+Verovatnoće preživljavanja po klasama:
+- Prva klasa: 0.58
+- Druga klasa: 0.42
+- Treća klasa: 0.26
+
+Zaključujemo da što je osoba "siromašnija" manje su joj šanse za preživljavanje. Takođe, jasno se vidi razlika u verovatnoćama preživljavanja između klasa (pogotovo između prve i poslednje), tako da ima smisla pretpostaviti da je klasa putnika uticala na šansu za preživljavanje.
+
+Prilikom pokretanja funkcije `test_survived_dependant_on_pclass()` vidimo da je vrednost *test statistike* 91.72, a vrednost konstante iz kritične sekcije je 9.21, tako da zaključujemo: **Klasa putnika je imala veliki uticaj na njegovu šansu za preživljavanje.**
+
+### Uticaj položaja kabine na šansu za preživljavanje.
+Prisetimo se da polje *Cabin* u našoj tabeli ima najviše nedostajućih vrednosti. 
+Prilikom analize prisutnih vrednosti, vidimo da se vrednosti kabine sastoji od slova, praćenog sa tri do četiri cifre.   
+Šta znače te cifre, vidimo na narednoj slici:  
+
+![cabin_letters]()
+
+
 
 ### Uticaj broja rođaka / supružnika na preživljavanje
 

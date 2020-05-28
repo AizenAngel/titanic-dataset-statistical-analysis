@@ -47,13 +47,13 @@ deal_with_Embarked_NA <- function(dataFrame){
   #print("Embarked NA: ")
   print(dataFrame[(is.na(dataFrame$Embarked)),])
   #unique(dataFrame$Embarked)
-  print(mean(dataFrame[(which(dataFrame$Embarked == "S")),]$Fare, na.rm = T))
-  print(mean(dataFrame[(which(dataFrame$Embarked == "C")),]$Fare, na.rm = T))
-  print(mean(dataFrame[(which(dataFrame$Embarked == "Q")),]$Fare, na.rm = T))
+  #print(median(dataFrame[(which(dataFrame$Embarked == "S" & dataFrame$Pclass==1 & dataFrame$Sex=="female" & dataFrame$Survived == 1)),]$Fare, na.rm = T))
+  #print(median(dataFrame[(which(dataFrame$Embarked == "C" & dataFrame$Pclass==1 & dataFrame$Sex=="female" & dataFrame$Survived == 1)),]$Fare, na.rm = T))
+  #print(median(dataFrame[(which(dataFrame$Embarked == "Q" & dataFrame$Pclass==1 & dataFrame$Sex=="female" & dataFrame$Survived == 1)),]$Fare, na.rm = T))
   
-  #dataFrame$Embarked <- na_replace(dataFrame$Embarked, 'C')
+  #dataFrame$Embarked <- na_replace(dataFrame$Embarked, 'S')
   dataFrame$Embarked <- ifelse(is.na(dataFrame$Embarked), 
-                               'C', dataFrame$Embarked)
+                               'S', dataFrame$Embarked)
   
   return (dataFrame)
 }
@@ -194,6 +194,7 @@ plot_embarked_vs_fare <- function(dataFrame) {
 dependency_test <- function(dataFrame, alpha){
   n <- length(dataFrame$Survived)
   dataTable <- table(dataFrame)
+  print(dataTable)
   
   p_rows <- apply(dataTable, FUN = sum, MARGIN = 1) / n
   p_columns <- apply(dataTable, FUN = sum, MARGIN = 2) / n
@@ -236,7 +237,7 @@ plot_sex_vs_age_survival <- function(dataset){
 }
 
 test_survived_dependant_on_age <- function(dataFrame, alpha){
-  # infancy, early childhood, middle childhood, late childhood,adolescence, earlay adulthood, midlife, mature adulthood, late adulthood
+  # early childhood, middle childhood and late childhood, adolescence, earlay adulthood, midlife, mature adulthood, late adulthood
   #age_breaks = c(4, 12, 21, 35, 50, 80)
   dataFrame$AgeGroup[dataFrame$Age < 4] <- 1
   dataFrame$AgeGroup[4<=dataFrame$Age & dataFrame$Age < 12] <- 2
@@ -301,8 +302,8 @@ main <- function(){
   
   test_survived_dependant_on_embarked(dataFrame, 0.01)
   test_survived_dependant_on_pclass(dataFrame, 0.01)
-  test_survived_dependant_on_age(dataFrame, 0.5)
-  test_survived_dependant_on_cabin(dataFrame, 0.4)
+  test_survived_dependant_on_age(dataFrame, 0.01)
+  test_survived_dependant_on_cabin(dataFrame, 0.01)
 
   plot_sex_vs_age_survival(dataFrame)   
   
