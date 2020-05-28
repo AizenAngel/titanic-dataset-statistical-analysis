@@ -387,6 +387,10 @@ Tabelarni prikaz podele izgleda ovako:
   </tr>
 </table>
 
+Hipoteze:  
+- *H0* - Godine putnika i šansa za preživljavanjem su nezavisne veličine
+- *H1* - Godine putnika i šansa za preživljavanjem su zavisne veličine
+
 Primećujemo da su prva i sedma kategorija imale veliku šansu za preživljavanjem, dok je cetvrta imala jako malu šansu.  
 Prilikom pokretanja funkcije `test_survived_dependant_on_age()` dobijamo da je 
 vrednost *test statistike* 15.76, a vrednost *konstante za kritičnu sekciju* je 16.81. Odavde zaključujemo da **prema ovoj podeli kategorija za godine, godine nisu uticale na šansu za preživljavanje.** 
@@ -422,16 +426,66 @@ Verovatnoće preživljavanja po klasama:
 
 Zaključujemo da što je osoba "siromašnija" manje su joj šanse za preživljavanje. Takođe, jasno se vidi razlika u verovatnoćama preživljavanja između klasa (pogotovo između prve i poslednje), tako da ima smisla pretpostaviti da je klasa putnika uticala na šansu za preživljavanje.
 
+Hipoteze koje testiramo:
+- *H0* - Klasa putnika nije uticala na njegovu šansu da preživi
+- *H1* - Klasa putnika je uticala na njeogvu šansu da preživi
+
 Prilikom pokretanja funkcije `test_survived_dependant_on_pclass()` vidimo da je vrednost *test statistike* 91.72, a vrednost konstante iz kritične sekcije je 9.21, tako da zaključujemo: **Klasa putnika je imala veliki uticaj na njegovu šansu za preživljavanje.**
 
 ### Uticaj položaja kabine na šansu za preživljavanje.
 Prisetimo se da polje *Cabin* u našoj tabeli ima najviše nedostajućih vrednosti. 
 Prilikom analize prisutnih vrednosti, vidimo da se vrednosti kabine sastoji od slova, praćenog sa tri do četiri cifre.   
-Šta znače te cifre, vidimo na narednoj slici:  
+Značenje slova vidimo na narednoj slici:  
 
 ![cabin_letters](https://raw.githubusercontent.com/AizenAngel/titanic-dataset-statistical-analysis/master/img/cabin_letters.png)
 
+Ovde vidimo da slova zapravo predstavljau oznaku palube. Prva klasa putnika je imala na raspolaganju palube [A-E], druga [D-F], a treća [E-G].
 
+Prva klasa je bila najbliža vrhu broda, samim tim i čamcima za spasavanje. Zato je logično da su putnici ove klase imali najveće šanse za preživljavanjem što je i potvrđeno prethodnim testom.  
+
+Prilikom testiranja smo izdvojili prvo slovo svake kabine (odnosno palubu na kojoj se kabina nalazi) i radili sa tim podatkom.
+
+<table>
+  <tr>
+    <th></th>
+    <th>A</th> 
+    <th>B</th>
+    <th>C</th>  
+    <th>D</th> 
+    <th>E</th>
+    <th>F</th>
+    <th>G</th> 
+    <th>T</th>  
+  </tr>
+  <tr>
+    <th>0</th>
+    <td>12</td> 
+    <td>21</td>
+    <td>40</td>  
+    <td>16</td> 
+    <td>13</td>
+    <td>10</td>
+    <td>2</td> 
+    <td>1</td>  
+  </tr>
+  <tr>
+    <th>1</th>
+    <td>10</td> 
+    <td>44</td>
+    <td>54</td>  
+    <td>30</td> 
+    <td>28</td>
+    <td>11</td>
+    <td>3</td> 
+    <td>0</td>  
+  </tr>
+</table>
+
+Zbog manjka podataka, ovde ne možemo zaključiti neko opšte pravio, međutim mi ćemo ipak da probamo da testiramo sledeće:
+- *H0*: Kabine putnika i njihove šanse za preživljavanjem su nezavisne veličine
+- *H1* - Putnici koji su bili smešteni u kabinama bliže vrhu broda su imali veće šanse za preživljavanjem.
+
+Pokretanjem funkcije `test_survived_dependant_on_cabin()` dobijamo da je vrednost *test statistike* 7.44, a vrednost *konstante kritične sekcije* je 18.47. Dakle, **ove 2 veličine su nezavisne.**
 
 ### Uticaj broja rođaka / supružnika na preživljavanje
 
@@ -439,8 +493,9 @@ Prilikom analize prisutnih vrednosti, vidimo da se vrednosti kabine sastoji od s
 
 ![plot_sibsp_vs_survived](https://i.postimg.cc/RF9fLT80/plot-sibsp-vs-survived.png)
 
-Vidimo da su najbolju šansu za preživljavanje imali oni koji su imali najviše 3 člana porodice na brodu. Naša pretpostavka zašto su podaci baš ovakvi je ta da su siromašnije porodice uglavnom bile veće i znamo da su one bile u trećoj klasi, a već smo pokazali putnička klasa itekako ima uticaja na preživljavanje
-
+Vidimo da su najbolju šansu za preživljavanje imali oni koji su imali najviše 3 člana porodice na brodu.
 
 ## Biblioteke:
 - [imputeTS](https://github.com/SteffenMoritz/imputeTS)
+- [ggplot2](https://ggplot2.tidyverse.org/)
+- [kableExtra](https://www.rdocumentation.org/packages/kableExtra/versions/1.1.0)
