@@ -1,4 +1,4 @@
-# Statisticka analiza skupa podataka Titanik
+# Statistička analiza skupa podataka Titanik
 
 ## Uvod
 
@@ -83,7 +83,15 @@ U nastavku je dato ime i opis svakog atributa u skupu:
   </tr>  
 </table>
 
-## Rad sa nedostajucim vrednostima
+## Preprocesiranje podataka
+
+Kako smo hteli da umesto samo kolone *Name* imamo odvojeno ime i prezime, početni podaci su obrađeni pomoću fajla `data_extractor.py` gde je starta kolona *Name* uklonjena i na osnovu nje su napravljene 2 nove kolone:
+  - *Name* - Samo ime osobe
+  - *Surname* - Samo prezime osobe
+
+Tako dobijene podatke smo dalje obradili kako bismo uklonili nedostajuće vrednsti
+
+## Rad sa nedostajućim vrednostima
 
 Tabela sa brojem nedostajućih vrednosti:
 
@@ -248,6 +256,54 @@ Iz tabele zaključujemo:
 <li>Klasa putnika je bila ista (sto je logično, jer su delile kabinu)</li>
 </ul>
 
+
+## Obrada podataka
+
+U ovom delu su prikazane razne podele i statistike koje smo radili nad podacima.
+
+### Odnos između imena putnika i šanse da su preživeli
+
+Ovde smo želeli da proverimo da li postoji nekakva veza između imena koje je imao putnik i činjenice da li je preživeo. Na grafiku 
+ispod su prikazana imena za koja je bilo bar 5 putnika na brodu, kao i procenat preživelih putnika:
+
+![plot_name_vs_survived](https://i.postimg.cc/1XnzGhvZ/plot-name-vs-survived.png)
+
+Interesantna stvar koju vidimo ovde je da su sve osobe sa imenom Kejt, Katarina ili Elizabeta preživele, dok je jedini slučaj gde niko nije preživeo bio kod osoba sa imenom Patrik.
+
+
+### Odnos između cene karte i mesta gde ukrcavanja
+
+Želeli smo da vidimo da li postoji nekakva razlika u ceni karte u zavisnosti od toga na kom mestu su se putnici ukrcali. Na grafiku ispod možemo da vidimo sve cene karata koje koštaju do 300 funti u sva 3 mesta. Limit od 300 funti je namerno postavljen, jer je bilo veoma malo karata koje su koštale više od 300 funti, pa je zbog lepšeg prikaza odlučeno da se te vrednosti ne gledaju.
+
+![plot_embarked_vs_fare](https://i.postimg.cc/CdpwbZZj/plot-embarked-vs-fare.png)
+
+Sa slike možemo videti da ne postoji nikakva bitna razlika u ceni karte, tj. da su cene karata slično raspoređene u sva 3 mesta. Jedina interesantna stvar koju vidimo je da se najmanje ljudi ukrcalo u luci za oznakom Q (Queenstown).
+
+### Uticaj pola na preživljavanje
+
+Želeli smo da proverimo da li pol ima uticaja na preživljavanje. Početna pretpostavka je bila da će imati, jer se zna da su prednost u čamcima dobijali žene i deca. Sa sledećeg grafika vidimo da pretpostavka jeste tačna:
+
+![plot_female_vs_male_survival_frequency](https://i.postimg.cc/0yMNMJVH/plot-female-vs-male-survival-frequency.png)
+
+Još jedan grafik koji prikazuje preživele i umrle:
+
+![plot_sex_vs_age_survived](https://i.postimg.cc/YqmcQfwg/plot-sex-vs-age-survived.png)
+
+Odavde se može primetiti da je najveći procenat osoba muškog pola koji je preživeo zapravo bio u dečijem uzrastu, što se takođe uklapa sa činjenicom da su u čamcima sa spašavanje prednost imali žene i deca.
+
+#### FALI TEST AKO POSTOJI 
+
+### Uticaj putničke klase na preživljavanje
+
+#### OVDE TEST
+
+### Uticaj broja rođaka / supružnika na preživljavanje
+
+Želeli smo da proverimo da li broj rođaka / supružnika nekako utiče na preživljavanje. Procenat preživljavanja je prikazan na sledećem grafiku:
+
+![plot_sibsp_vs_survived](https://i.postimg.cc/RF9fLT80/plot-sibsp-vs-survived.png)
+
+Vidimo da su najbolju šansu za preživljavanje imali oni koji su imali najviše 3 člana porodice na brodu. Naša pretpostavka zašto su podaci baš ovakvi je ta da su siromašnije porodice uglavnom bile veće i znamo da su one bile u trećoj klasi, a već smo pokazali putnička klasa itekako ima uticaja na preživljavanje
 
 
 ## Biblioteke:
