@@ -1,6 +1,6 @@
 # Statistička analiza skupa podataka Titanik
 
-
+![titanic_image](https://i.postimg.cc/jj9mnKc3/Titanic.jpg)
 
 ## Uvod
 
