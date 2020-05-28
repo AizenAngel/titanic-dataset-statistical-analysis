@@ -110,28 +110,10 @@ plot_sibsp_vs_survived <- function(dataFrame) {
   }
   
   
-  mean_survival_perc <- mean(survival_percentage)
-  var_survival_perc <- var(survival_percentage)
-  
-  alpha <- mean_survival_perc * mean_survival_perc / var_survival_perc
-  beta <- mean_survival_perc / var_survival_perc
-  
-  x <- round(rgamma(8,shape = alpha,rate = beta),1)
-  plot(dgamma(survival_percentage, shape = alpha,rate = beta ))
-  print(x)
-  
-  print(alpha)
-  print(beta)
-  
-  print(survival_percentage)
-  
-  
-  
   #png(file='img/plot_sibsp_vs_survived.png')
   barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 1),col="blue",
-  main="Survival Percentage vs SibSp")
- #? FIXME
-  plot(dgamma(x, shape = alpha, scale = beta), add = TRUE, col='red', lwd=2 )
+          main="Survival Percentage vs SibSp")
+  #? FIXME
   #dev.off()
 }
 
@@ -306,8 +288,7 @@ main <- function(){
   test_survived_dependant_on_cabin(dataFrame, 0.01)
 
   plot_sex_vs_age_survival(dataFrame)   
-  
-  
 }
 main()
 
+?sd
