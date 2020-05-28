@@ -429,7 +429,7 @@ Prisetimo se da polje *Cabin* u našoj tabeli ima najviše nedostajućih vrednos
 Prilikom analize prisutnih vrednosti, vidimo da se vrednosti kabine sastoji od slova, praćenog sa tri do četiri cifre.   
 Šta znače te cifre, vidimo na narednoj slici:  
 
-![cabin_letters]()
+![cabin_letters](https://raw.githubusercontent.com/AizenAngel/titanic-dataset-statistical-analysis/master/img/cabin_letters.png)
 
 
 
