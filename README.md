@@ -10,9 +10,9 @@ Element sreće je definitivno uticao na to ko od putnika će preživeti, a ko ne
 Međutim, mi smatramo da su postojali neki dodatni faktori koji su uticali na to ko od putnika ce biti stavljen na brod za spasavanje i ovim seminarskim radom želimo da utvrdimo šta je to uticalo na odluku da li će osoba preživeti ili ne. 
 
 
-## Podela podataka
+## Spajanje podataka
 
-Titanik skup podataka je namenjen za vezbanje tehnika istrazivanja podataka, te se samim tim sastoji iz 2 dela:
+Titanik skup podataka je originalno namenjen za vežbanje tehnika istrazivanja podataka, te se samim tim sastoji iz 2 dela:
 - *Trening deo*
 - *Test deo*
 

@@ -228,7 +228,7 @@ test_survived_dependant_on_age <- function(dataFrame, alpha){
   dataFrame$AgeGroup[35<=dataFrame$Age & dataFrame$Age < 50] <- 5
   dataFrame$AgeGroup[50<=dataFrame$Age & dataFrame$Age < 80] <- 6
   dataFrame$AgeGroup[dataFrame$Age >= 80] <- 7 
-  
+    
   survived_age_subset <- subset(dataFrame, select = c("Survived", "AgeGroup"))
   survived_age_subset <- na.omit(survived_age_subset)
   
@@ -246,6 +246,7 @@ test_survived_dependant_on_cabin <- function(dataFrame, alpha){
 
   return (dependency_test(survived_cabin_subset, alpha))  
 }
+
 
 #####################################################################################
 main <- function(){
