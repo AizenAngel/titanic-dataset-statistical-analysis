@@ -267,21 +267,6 @@ main <- function(){
   plot_embarked_vs_fare(dataFrame)
   plot_female_vs_male_survival_frequency(dataFrame)
   
-  
-  #test_survived_dependant_on_embarked(dataFrame, 0.01)  
-  
-  #test_survived_dependant_on_fare(dataFrame, 0.01)
-  #test_survived_dependant_on_pclass(dataFrame, 0.01)
- 
-  
-  #test_survived_dependant_on_embarked(dataFrame, 0.01)
-
-  #table(dataFrame$AgeRange)
-  
-  fare <- dataFrame$Fare
-  max(fare)
-  min(fare)
-  
   test_survived_dependant_on_embarked(dataFrame, 0.01)
   test_survived_dependant_on_pclass(dataFrame, 0.01)
   test_survived_dependant_on_age(dataFrame, 0.01)
@@ -290,5 +275,3 @@ main <- function(){
   plot_sex_vs_age_survival(dataFrame)   
 }
 main()
-
-?sd
