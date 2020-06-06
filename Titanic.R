@@ -2,6 +2,8 @@ library("imputeTS")
 library(ggplot2)
 library(kableExtra)
 library(MASS)
+library(mice)
+library(caret)
 
 # mean(train_data$Age, na.rm = T)   = 29.69912
 # median(train_data$Age, na.rm = T) = 28
@@ -42,6 +44,17 @@ read_test_data <- function(dataPath, classPath){
   return (convert_to_numeric(data))
 }
 
+deal_with_Age_NA <- function(dataFrame) {
+  mice_dataframe <- subset(dataFrame, select = c("Survived", "Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked")) 
+  mice_impute <- mice(mice_dataframe, method = "rf")
+  micecomplete<- complete(mice_impute)
+  
+  #summary(dataFrame$Age)
+  #summary(micecomplete$Age)
+  dataFrame$Age <- micecomplete$Age
+  #mice.impute.
+  return (dataFrame)
+}
 
 deal_with_Embarked_NA <- function(dataFrame){
   #print("Embarked NA: ")
@@ -77,7 +90,7 @@ deal_with_NA_values <- function(dataFrame){
   #dataFrame <- deal_with_Cabin_NA(dataFrame)
   dataFrame <- deal_with_Embarked_NA(dataFrame)
   dataFrame <- deal_with_Fare_NA(dataFrame)
-  
+  dataFrame <- deal_with_Age_NA(dataFrame)
   sapply(dataFrame, function(x) sum(is.na(x)))
   
   return (dataFrame)
@@ -268,7 +281,6 @@ regresion_for_survived <- function(dataFrame) {
   
   print(table(predicted))
   
-  print('Comparing Survived vs. Age*Pclass')
   modelSurvivedVsAge = glm(Survived~Age*Pclass, data = trainData, family='binomial')
   print(summary(modelSurvivedVsAge))
   predicted <- predict(modelSurvivedVsAge, newdata = testData, type = "response")
@@ -293,32 +305,27 @@ regresion_for_survived <- function(dataFrame) {
   
 }
 
-#####################################################################################
 main <- function(){
   print('main started')
   dataFrame <- read_data("./Titanic/extracted_train.csv", "./Titanic/extracted_test.csv", "./Titanic/classes.csv")  
   print('dataFrame loaded')
-  dataFrame <- deal_with_NA_values(dataFrame)
   
+  dataFrame <- deal_with_NA_values(dataFrame)
   print('Dealt with NA vals')
   
-  c1 <- ncol(dataFrame)
-  print(c1)
   
-  #survived(dataFrame)
+  plot_sibsp_vs_survived(dataFrame)
+  plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
+  plot_embarked_vs_fare(dataFrame)
+  plot_female_vs_male_survival_frequency(dataFrame)
+  plot_sex_vs_age_survival(dataFrame)
   
-  # prop.table(table(dataFrame$Survived))
-  #plot_sibsp_vs_survived(dataFrame)
-  #plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
-  #plot_embarked_vs_fare(dataFrame)
-  #plot_female_vs_male_survival_frequency(dataFrame)
-  
-  #test_survived_dependant_on_embarked(dataFrame, 0.01)
-  #test_survived_dependant_on_pclass(dataFrame, 0.01)
-  #test_survived_dependant_on_age(dataFrame, 0.01)
-  #test_survived_dependant_on_cabin(dataFrame, 0.01)
-
-  #plot_sex_vs_age_survival(dataFrame)   
+  test_survived_dependant_on_embarked(dataFrame, 0.01)
+  test_survived_dependant_on_pclass(dataFrame, 0.01)
+  test_survived_dependant_on_age(dataFrame, 0.01)
+  test_survived_dependant_on_cabin(dataFrame, 0.01)
+   
   regresion_for_survived(dataFrame)
 }
+
 main()

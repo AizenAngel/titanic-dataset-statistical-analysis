@@ -153,12 +153,16 @@ Vidimo da polja *Age*, *Fare*, *Cabin*, *Embarked* imaju nedostajuće vrednosti 
 
 ### Nedostajuće vrednosti za godine
 
-Iz datog skupa, vidimo da *Age* atribut ima 263 nedostajuće vrednosti. U želji da što bolje sačuvamo originalnost podataka, nismo ih aproksimirali, a kada se javila potreba za izučavanjem ovog atributa, uklonili smo nedostajuće vrednosti.
+Iz datog skupa, vidimo da *Age* atribut ima 263 nedostajuće vrednosti. Da bismo popunili te vrednosti, koristili smo *mice* paket iz R-a, čija je uloga rad sa nedostajućim vrednostima. Naredna slika pokazuje statistike za *Age* klasu, pre i posle popunjavanja:
+
+![plot_age_impute_table](https://i.postimg.cc/W4pB7f5q/age-impute.png)
+
+Vidimo da jedina statistika po kojoj se razlikuju ove 2 pregleda je *Mean* i to za 0.08, što je prilično dobro, tako da smo zadovoljni ovom aproksimacijom.
 
 ### Nedostajuće vrednosti za kabinu
 
 Ovde je situacija gora nego za prehnodni slucaj jer *Cabin* atribut ima 1014
-nedostajućih vrednosti, tako da smo primenili istu strategiju.
+nedostajućih vrednosti, tako da smo ovde zaključili da nema smisla raditi aproksimaciju nedostajuće vrednosti.
 
 ### Nedostajuće vrednosti za cenu karte
 
