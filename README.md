@@ -153,7 +153,7 @@ Vidimo da polja *Age*, *Fare*, *Cabin*, *Embarked* imaju nedostajuće vrednosti 
 
 ### Nedostajuće vrednosti za godine
 
-Iz datog skupa, vidimo da *Age* atribut ima 263 nedostajuće vrednosti. Da bismo popunili te vrednosti, koristili smo *mice* paket iz R-a, čija je uloga rad sa nedostajućim vrednostima. Naredna slika pokazuje statistike za *Age* klasu, pre i posle popunjavanja:
+Iz datog skupa, vidimo da *Age* atribut ima 263 nedostajuće vrednosti. Da bismo popunili te vrednosti, koristili smo *mice* paket iz R-a, čija je uloga rad sa nedostajućim vrednostima. Naredna slika pokazuje statistike za *Age* atribut, pre i posle popunjavanja:
 
 ![plot_age_impute_table](https://i.postimg.cc/W4pB7f5q/age-impute.png)
 
