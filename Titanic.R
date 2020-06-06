@@ -3,7 +3,6 @@ library(ggplot2)
 library(kableExtra)
 library(MASS)
 library(mice)
-library(caret)
 
 # mean(train_data$Age, na.rm = T)   = 29.69912
 # median(train_data$Age, na.rm = T) = 28

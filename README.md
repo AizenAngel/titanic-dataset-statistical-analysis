@@ -623,7 +623,8 @@ testSurvived     Didn't survive Survived
 **Preciznost: 0.79**
 
 
-## Biblioteke:
+## Biblioteke neophodne za rad:
 - [imputeTS](https://github.com/SteffenMoritz/imputeTS)
 - [ggplot2](https://ggplot2.tidyverse.org/)
 - [kableExtra](https://www.rdocumentation.org/packages/kableExtra/versions/1.1.0)
+- [mice](https://www.rdocumentation.org/packages/mice/versions/3.9.0/topics/mice)
