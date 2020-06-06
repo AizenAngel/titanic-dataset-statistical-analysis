@@ -248,6 +248,27 @@ test_survived_dependant_on_cabin <- function(dataFrame, alpha){
 }
 
 
+regresion_for_survived <- function(dataFrame) {
+  
+  #shuffle data
+  dataFrame <- dataFrame[sample(nrow(dataFrame)), ]
+  
+  trainData <- dataFrame[1:1000, ]
+  testData <- dataFrame[1001:1309, ]
+  
+  print("num of rows train: ")
+  print(nrow(trainData))
+  
+  print("num of rows test: ")
+  print(nrow(testData))
+  
+  print('Comparing Survived vs. Age')
+  modelAgeVsSurvived = glm(trainData$Survived~trainData$Age, family='binomial')
+  
+  predicted <- predict(modelAgeVsSurvived, newdata = testData, type = "response") > 0.5
+  print(length(predicted))
+}
+
 #####################################################################################
 main <- function(){
   print('main started')
@@ -263,16 +284,17 @@ main <- function(){
   #survived(dataFrame)
   
   # prop.table(table(dataFrame$Survived))
-  plot_sibsp_vs_survived(dataFrame)
-  plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
-  plot_embarked_vs_fare(dataFrame)
-  plot_female_vs_male_survival_frequency(dataFrame)
+  #plot_sibsp_vs_survived(dataFrame)
+  #plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)
+  #plot_embarked_vs_fare(dataFrame)
+  #plot_female_vs_male_survival_frequency(dataFrame)
   
-  test_survived_dependant_on_embarked(dataFrame, 0.01)
-  test_survived_dependant_on_pclass(dataFrame, 0.01)
-  test_survived_dependant_on_age(dataFrame, 0.01)
-  test_survived_dependant_on_cabin(dataFrame, 0.01)
+  #test_survived_dependant_on_embarked(dataFrame, 0.01)
+  #test_survived_dependant_on_pclass(dataFrame, 0.01)
+  #test_survived_dependant_on_age(dataFrame, 0.01)
+  #test_survived_dependant_on_cabin(dataFrame, 0.01)
 
-  plot_sex_vs_age_survival(dataFrame)   
+  #plot_sex_vs_age_survival(dataFrame)   
+  regresion_for_survived(dataFrame)
 }
 main()
