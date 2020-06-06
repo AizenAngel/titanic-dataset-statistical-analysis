@@ -250,9 +250,6 @@ test_survived_dependant_on_cabin <- function(dataFrame, alpha){
 
 regresion_for_survived <- function(dataFrame) {
   
-  #shuffle data
-  dataFrame <- dataFrame[sample(nrow(dataFrame)), ]
-  
   trainData <- dataFrame[1:1000, ]
   testData <- dataFrame[1001:1309, ]
   
@@ -263,10 +260,37 @@ regresion_for_survived <- function(dataFrame) {
   print(nrow(testData))
   
   print('Comparing Survived vs. Age')
-  modelAgeVsSurvived = glm(trainData$Survived~trainData$Age, family='binomial')
+  modelSurvivedVsAge = glm(Survived~Age, data = trainData, family='binomial')
+  print(summary(modelSurvivedVsAge))
+  predicted <- predict(modelSurvivedVsAge, newdata = testData, type = "response")
+  predicted <- predicted[!is.na(predicted)]
+  predicted <- ifelse(predicted > 0.5, "Survived", "Didn't survive")
   
-  predicted <- predict(modelAgeVsSurvived, newdata = testData, type = "response") > 0.5
+  print(table(predicted))
+  
+  print('Comparing Survived vs. Age*Pclass')
+  modelSurvivedVsAge = glm(Survived~Age*Pclass, data = trainData, family='binomial')
+  print(summary(modelSurvivedVsAge))
+  predicted <- predict(modelSurvivedVsAge, newdata = testData, type = "response")
+  predicted <- predicted[!is.na(predicted)]
+  predicted <- ifelse(predicted > 0.5, "Survived", "Didn't survive")
+  
+  print(table(predicted))
+  
+  print('Comparing Survived vs. Pclass')
+  modelSurvivedVsAge = glm(Survived~Pclass, data = trainData, family='binomial')
+  print(summary(modelSurvivedVsAge))
+  predicted <- predict(modelSurvivedVsAge, newdata = testData, type = "response")
+  predicted <- predicted[!is.na(predicted)]
+  predicted <- ifelse(predicted > 0.5, "Survived", "Didn't survive")
+  
+  print(table(predicted))
   print(length(predicted))
+  
+  testSurvived <- testData$Survived
+  testSurvived <- ifelse(testSurvived == 1, "Survived", "Didn't survive")
+  print(table(testSurvived, predicted))
+  
 }
 
 #####################################################################################

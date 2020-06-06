@@ -497,6 +497,128 @@ Pokretanjem funkcije `test_survived_dependant_on_cabin()` dobijamo da je vrednos
 
 Vidimo da su najbolju šansu za preživljavanje imali oni koji su imali najviše 3 člana porodice na brodu.
 
+### Logistička regresija nad Survived
+
+**Funkcija `predict()` name je iz nepoznatih razloga vraćala NA vrednost, pa zato nismo mogli da napravimo matricu konfuzije za prva 2 modela**
+
+Prva stvar koju smo probali bila je da vidimo da li godine imaju uticaja na preživljavanje. Koristili smo posebne setove za trening i test i dobili smo sledeće rezultate:
+
+### Survived ~ Age
+
+#### Model
+
+```
+glm(formula = Survived ~ Age, family = "binomial", data = trainData)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.1167  -1.0227  -0.9557   1.3325   1.5421  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)  
+(Intercept) -0.141398   0.164767  -0.858   0.3908  
+Age         -0.009006   0.005001  -1.801   0.0718 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1072.1  on 796  degrees of freedom
+Residual deviance: 1068.9  on 795  degrees of freedom
+  (203 observations deleted due to missingness)
+AIC: 1072.9
+
+Number of Fisher Scoring iterations: 4
+```
+Odavde vidimo da Age ima uticaja. Klasifikacija nad test skupovima je dala sledeće rezultate:
+
+``` 
+Didn't survive     Survived
+    244                0
+```
+
+### Survived ~ Age*Pclass
+
+#### Model
+
+```
+glm(formula = Survived ~ Age * Pclass, family = "binomial", data = trainData)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.9713  -0.8815  -0.6714   1.0642   2.2660  
+
+Coefficients:
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  2.857209   0.582057   4.909 9.16e-07 ***
+Age         -0.030900   0.014754  -2.094   0.0362 *  
+Pclass      -1.002942   0.234650  -4.274 1.92e-05 ***
+Age:Pclass  -0.002059   0.006834  -0.301   0.7632    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1083.59  on 801  degrees of freedom
+Residual deviance:  964.02  on 798  degrees of freedom
+  (198 observations deleted due to missingness)
+AIC: 972.02
+
+Number of Fisher Scoring iterations: 4
+
+```
+Odavde vidimo da `Pclass` ima mnogo više uticaja nego `Age` (što ima smisla). Klasifikacija nad test skupovima je dala sledeće rezultate:
+
+``` 
+Didn't survive     Survived
+    152                92
+```
+
+### Survived ~ Pclass
+
+#### Model
+
+```
+glm(formula = Survived ~ Pclass, family = "binomial", data = trainData)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.3917  -0.7751  -0.7751   0.9773   1.6427  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  1.26067    0.19213   6.562 5.33e-11 ***
+Pclass      -0.76984    0.08071  -9.538  < 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1331.0  on 999  degrees of freedom
+Residual deviance: 1234.8  on 998  degrees of freedom
+AIC: 1238.8
+
+Number of Fisher Scoring iterations: 4
+
+```
+Odavde vidimo da `Pclass` ima veoma velik uticaj na preživljavanje (što opet ima smisla). Klasifikacija nad test skupovima je dala sledeće rezultate:
+
+``` 
+Didn't survive     Survived
+    233                76
+```
+
+Matrica konfuzije:
+```
+                predicted
+testSurvived     Didn't survive Survived
+  Didn't survive            157       41
+  Survived                   76       35
+```
+**Odziv: 0.67**   
+**Preciznost: 0.79**
+
+
 ## Biblioteke:
 - [imputeTS](https://github.com/SteffenMoritz/imputeTS)
 - [ggplot2](https://ggplot2.tidyverse.org/)
