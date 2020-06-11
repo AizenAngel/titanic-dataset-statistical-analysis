@@ -342,7 +342,7 @@ Ovim rezultatom potvrđujemo da je verovatnoća preživljavanja osobe zavisila o
 
 Još jedan grafik koji prikazuje preživele i umrle:
 
-![plot_sex_vs_age_survived](https://i.postimg.cc/YqmcQfwg/plot-sex-vs-age-survived.png)
+![plot_sex_vs_age_survived](https://i.postimg.cc/RCPzdhjv/plot-sex-vs-age-survived.png)
 
 Odavde se može primetiti da je najveći procenat osoba muškog pola koji je preživeo zapravo bio u dečijem uzrastu, što se takođe uklapa sa činjenicom da su u čamcima sa spašavanje prednost imali žene i deca.
 
@@ -373,22 +373,22 @@ Tabelarni prikaz podele izgleda ovako:
   </tr>
   <tr>
     <th>0</th>
-    <td>14</td>
-    <td>28</td>
-    <td>93</td>
-    <td>287</td>
-    <td>140</td>
-    <td>67</td>
+    <td>20</td>
+    <td>37</td>
+    <td>120</td>
+    <td>369</td>
+    <td>182</td>
+    <td>87</td>
     <td>0</td>
   </tr>
   <tr>
     <th>1</th>
+    <td>29</td>
     <td>27</td>
-    <td>22</td>
-    <td>65</td>
-    <td>165</td>
-    <td>95</td>
-    <td>52</td>
+    <td>78</td>
+    <td>198</td>
+    <td>114</td>
+    <td>47</td>
     <td>1</td>
   </tr>
 </table>
@@ -399,7 +399,7 @@ Hipoteze:
 
 Primećujemo da su prva i sedma kategorija imale veliku šansu za preživljavanjem, dok je cetvrta imala jako malu šansu.  
 Prilikom pokretanja funkcije `test_survived_dependant_on_age()` dobijamo da je 
-vrednost *test statistike* 15.76, a vrednost *konstante za kritičnu sekciju* je 16.81. Odavde zaključujemo da **prema ovoj podeli kategorija za godine, godine nisu uticale na šansu za preživljavanje.** 
+vrednost *test statistike* 14.41, a vrednost *konstante za kritičnu sekciju* je 16.81. Odavde zaključujemo da **prema ovoj podeli kategorija za godine, godine nisu uticale na šansu za preživljavanje.** 
 
 ### Uticaj putničke klase na preživljavanje
 Tabelarni prikaz koja pokazuje raspodelu putničke klase prema tome da li je osoba preživela:

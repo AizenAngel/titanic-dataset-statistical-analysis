@@ -126,7 +126,7 @@ plot_sibsp_vs_survived <- function(dataFrame) {
   #png(file='img/plot_sibsp_vs_survived.png')
   barplot(survival_percentage, names.arg=all_sibsp, xlab="SibSp", ylab="Survival Percentage", ylim=c(0, 1),col="blue",
           main="Survival Percentage vs SibSp")
-  #? FIXME
+  
   #dev.off()
 }
 
@@ -226,9 +226,9 @@ plot_sex_vs_age_survival <- function(dataset){
   ggplot(dataFrame, aes(Age, fill = factor(Survived))) + 
     geom_histogram() + 
     facet_grid(.~Sex) 
-  ggsave(
-    "img/plot_sex_vs_age_survived.png",
-    plot = last_plot())
+  #ggsave(
+  #  "img/plot_sex_vs_age_survived.png",
+  #  plot = last_plot())
 }
 
 test_survived_dependant_on_age <- function(dataFrame, alpha){
@@ -245,7 +245,6 @@ test_survived_dependant_on_age <- function(dataFrame, alpha){
   survived_age_subset <- subset(dataFrame, select = c("Survived", "AgeGroup"))
   survived_age_subset <- na.omit(survived_age_subset)
   
-  #table(survived_age_subset)
   
   return(dependency_test(survived_age_subset, alpha))
 }
