@@ -3,6 +3,7 @@ library(ggplot2)
 library(kableExtra)
 library(MASS)
 library(mice)
+library(caret)
 
 # mean(train_data$Age, na.rm = T)   = 29.69912
 # median(train_data$Age, na.rm = T) = 28
@@ -312,6 +313,7 @@ main <- function(){
   dataFrame <- deal_with_NA_values(dataFrame)
   print('Dealt with NA vals')
   
+  summary(dataFrame$Age)
   
   plot_sibsp_vs_survived(dataFrame)
   plot_name_vs_survived(dataFrame, min_num_of_people_with_the_name = 5)

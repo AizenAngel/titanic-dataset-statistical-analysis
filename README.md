@@ -286,7 +286,7 @@ ispod su prikazana imena za koja je bilo bar 5 putnika na brodu, kao i procenat 
 Interesantna stvar koju vidimo ovde je da su sve osobe sa imenom Kejt, Katarina ili Elizabeta preživele, dok je jedini slučaj gde niko nije preživeo bio kod osoba sa imenom Patrik.
 
 
-### Odnos između cene karte i mesta gde ukrcavanja
+### Odnos između cene karte i mesta ukrcavanja
 
 Želeli smo da vidimo da li postoji nekakva razlika u ceni karte u zavisnosti od toga na kom mestu su se putnici ukrcali. Na grafiku ispod možemo da vidimo sve cene karata koje koštaju do 300 funti u sva 3 mesta. Limit od 300 funti je namerno postavljen, jer je bilo veoma malo karata koje su koštale više od 300 funti, pa je zbog lepšeg prikaza odlučeno da se te vrednosti ne gledaju.
 
