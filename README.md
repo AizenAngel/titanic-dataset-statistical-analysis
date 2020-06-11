@@ -327,8 +327,8 @@ Verovatnoće preživljavanja za svaku luku su:
 Odavde bi se moglo zaključiti da luka iz koje se osoba ukrcala utiče na verovatnoću njenog preživljavanja.  
 Da bismo potvrdili tu hipotezu, napravili smo test nezavisnosti izmedju mesta ukrcavanja osobe i toga da li je ona preživela, odnosno:
 
-- *H0* - luka ukrcavanja i verovatnoća preživljavanja su nezavisne veličine
-- *H1* - luka ukrcavanja i verovatnoća preživljavanja su zavisne veličine
+- *H0* - luka ukrcavanja i preživljavanje su nezavisne veličine
+- *H1* - luka ukrcavanja i preživljavanje su zavisne veličine
 
 Iz fajla `Titanik.R` prilikom pokretanja funkcije  `test_survived_dependant_on_embarked()` dobijamo da je vrednost *test statistike*
 24.19, a *kritične sekcije* 9.21.  
